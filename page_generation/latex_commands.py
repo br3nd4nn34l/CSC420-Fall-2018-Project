@@ -1,7 +1,7 @@
 from pylatex.base_classes import CommandBase
 from pylatex import UnsafeCommand, Package, NoEscape
 
-from constants import BOX_COLOR_NAME, BOX_TEXT_COLOR_NAME, TEXT_COLOR_NAME, PAGE_COLOR_NAME
+from constants import BOX_COLOR_NAME, BOX_TEXT_COLOR_NAME
 
 class BoxedEquationCommand(CommandBase):
     _latex_name = "boxedEquation"
@@ -14,7 +14,3 @@ boxed_equation_code = fr"""\colorbox{{{BOX_COLOR_NAME}}}{{\textcolor{{{BOX_TEXT_
 
 BoxedEquationDefinition = UnsafeCommand("newcommand", r"\boxedEquation", options=1,
                                         extra_arguments=boxed_equation_code)
-
-TextColorDefinition = UnsafeCommand("color", f"{TEXT_COLOR_NAME}")
-
-PageColorDefinition = UnsafeCommand("pagecolor", f"{PAGE_COLOR_NAME}")

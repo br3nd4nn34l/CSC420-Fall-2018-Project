@@ -2,15 +2,20 @@ import random as rand
 
 # Library for producing data
 
-def try_or_return(func):
+#region HELPER FUNCTIONS
+
+def try_or_return(maybe_func):
     """
-    Tries to call func(), otherwise returns func
+    Tries to call maybe_func(), otherwise returns maybe_func
     """
     try:
-        return func()
+        return maybe_func()
     except:
-        return func
+        return maybe_func
 
+#endregion
+
+#region PRODUCER DEFINITIONS
 class AbstractProducer:
     """
     Any AbstractProducer can be "then-ed" with a procedure.
@@ -88,3 +93,15 @@ class NormalProducer(AbstractProducer):
 
     def __call__(self):
         return rand.gauss(self.mu, self.sigma)
+
+#endregion
+
+#region PREDEFINED PRODUCERS
+
+StandardUniform = UniformProducer(0, 1)
+StandardNormal = NormalProducer(0, 1)
+
+BoolCoinFlip = UniformProducer(0, 1)\
+    .then(lambda x : x > 0.5)
+
+#endregion

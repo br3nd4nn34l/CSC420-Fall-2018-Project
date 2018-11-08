@@ -50,7 +50,6 @@ def doc_append(doc, cmd):
     doc.append(cmd)
     return doc
 
-
 # Produces LATEX document objects
 DocumentProducer = InstanceProducer(
     Document,
