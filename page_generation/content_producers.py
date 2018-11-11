@@ -1,16 +1,16 @@
-from pylatex import NoEscape, Section, Subsection
-from pylatex.lists import List, Enumerate, Itemize, Description
+from pylatex import NoEscape, Section
+from pylatex.lists import Enumerate, Itemize, Description
 
 from faker import Faker
 
-from constants import EQUATION_LIST_PATH
+from page_generation.constants import EQUATION_LIST_PATH
 
-from generic_producers import UniformProducer, NormalProducer, \
+from page_generation.generic_producers import UniformProducer, NormalProducer, \
     ListProducer, \
     StandardUniform, BoolCoinFlip
 
 
-from latex_commands import BoxedEquation
+from page_generation.latex_commands import BoxedEquation
 
 #region SEMANTICS
 

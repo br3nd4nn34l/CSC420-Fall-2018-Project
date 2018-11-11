@@ -23,3 +23,11 @@ NEW_PAGE_COLOR_RGB = (0, 0, 0)  # BLACK
 EQUATION_LIST_PATH = os.path.join("data_sources", "im2latex_formulas.lst")
 
 #endregion
+
+#region PRODUCTION PARAMETERS
+
+NUM_DOCUMENTS = 2000
+
+NUM_SECTIONS = 50
+
+#endregion

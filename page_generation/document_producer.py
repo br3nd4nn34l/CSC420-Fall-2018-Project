@@ -1,16 +1,15 @@
-from pylatex import Document, Section, Itemize, Enumerate, Description, \
-    Command, NoEscape
+from pylatex import Document, NoEscape
 
-from generic_producers import \
+from page_generation.generic_producers import \
     DictProducer, ListProducer, \
     InstanceProducer, \
     UniformProducer, NormalProducer
 
-from constants import COLOR_MODEL, \
+from page_generation.constants import COLOR_MODEL, \
     BOX_COLOR_NAME, BOX_COLOR_RGB, \
     BOX_TEXT_COLOR_NAME, BOX_TEXT_COLOR_RGB
 
-from latex_commands import BoxedEquationDefinition
+from page_generation.latex_commands import BoxedEquationDefinition
 
 # Picks document class
 DocumentClassProducer = ListProducer(["article", "report"]) \
@@ -50,6 +49,7 @@ def doc_append(doc, cmd):
     doc.append(cmd)
     return doc
 
+
 # Produces LATEX document objects
 DocumentProducer = InstanceProducer(
     Document,
@@ -62,3 +62,4 @@ DocumentProducer = InstanceProducer(
     .then(lambda doc: add_color(doc, BOX_COLOR_NAME, BOX_COLOR_RGB)) \
     .then(lambda doc: add_color(doc, BOX_TEXT_COLOR_NAME, BOX_TEXT_COLOR_RGB)) \
     .then(lambda doc: doc_append(doc, BoxedEquationDefinition))
+    # .then(lambda doc: doc_append(doc, NoEscape(r"\tolerance=10000 \pretolerance=10000")))
