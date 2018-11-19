@@ -1,0 +1,4 @@
+Additional libraries that were installed to run the code
+
+- bresenham:
+python -m pip install bresenham
