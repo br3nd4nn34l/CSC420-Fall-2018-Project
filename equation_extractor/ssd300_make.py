@@ -7,17 +7,16 @@ sys.path.append(os.path.dirname(sys.path[0]))
 import argparse
 
 def make_network(size, destination):
-    from equation_extractor.ssd_helpers import make_ssd7_model, min_scale
+    from equation_extractor.ssd_helpers import make_ssd300_model
 
-    print(f"Creates the architecture for an SSD7 model to detect equation bounding boxes for:"
+    print(f"Creating the architecture for an SSD300 model to "
+          f"detect equation bounding boxes for:"
           f"\n\t{size}x{size} Input Images"
-          f"\n\t1             Class (Equations)"
-          f"\n\t{min_scale}   Minimum Scale")
+          f"\n\t1             Class (Equations)")
     print("Saving architecture to {}".format(destination))
 
     # Build model for equation finding task
-    model = make_ssd7_model(size)
-
+    model = make_ssd300_model(size)
 
     # Report model architecture and save architecture
     model.summary()
@@ -26,7 +25,7 @@ def make_network(size, destination):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description=f"Creates an SSD7 model architecture optimized for detecting"
+        description=f"Creates an SSD300 model architecture optimized for detecting"
                     f"equation-bounding-boxes for k x k square images."
     )
 

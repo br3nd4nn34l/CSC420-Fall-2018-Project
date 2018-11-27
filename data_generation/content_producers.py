@@ -3,14 +3,14 @@ from pylatex.lists import Enumerate, Itemize, Description
 
 from faker import Faker
 
-from page_generation.constants import EQUATION_LIST_PATH
+from data_generation.constants import EQUATION_LIST_PATH
 
-from page_generation.generic_producers import UniformProducer, NormalProducer, \
+from data_generation.generic_producers import UniformProducer, NormalProducer, \
     ListProducer, \
     StandardUniform, BoolCoinFlip
 
 
-from page_generation.latex_commands import BoxedEquation
+from data_generation.latex_commands import BoxedEquation
 
 #region SEMANTICS
 
@@ -105,7 +105,6 @@ ItemizeProducer = ListContentProducer\
     .then(lambda contents : itemize(contents))
 
 def make_enumerate(contents):
-    # TODO MAKE THIS BETTER
     ret = Enumerate()
     for item in contents:
         ret.add_item(item)

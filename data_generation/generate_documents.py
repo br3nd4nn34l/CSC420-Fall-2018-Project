@@ -1,14 +1,16 @@
-# Test for list structures in PyLaTeX.
 # More info @ http://en.wikibooks.org/wiki/LaTeX/List_Structures
 import os
+import sys
 
-from page_generation.generic_producers import StandardUniform
-from page_generation.document_producer import DocumentProducer
-from page_generation.content_producers import EquationProducer, \
+# So this can be run as a script
+sys.path.append(os.path.dirname(sys.path[0]))
+
+import argparse
+
+from data_generation.generic_producers import StandardUniform
+from data_generation.document_producer import DocumentProducer
+from data_generation.content_producers import EquationProducer, \
     SectionProducer, CollectionProducer, ParagraphProducer
-
-from page_generation.constants import \
-    NUM_DOCUMENTS, NUM_SECTIONS
 
 
 def create_document(num_sections):
@@ -37,6 +39,7 @@ def create_document(num_sections):
 
     return doc
 
+
 def document_to_tex(doc, base_path):
     """
     Converts the PyLatex Document doc into a TEX file (base_path.tex).
@@ -49,6 +52,7 @@ def document_to_tex(doc, base_path):
         return tex_path
 
     return None
+
 
 def tex_to_pdf(tex_path):
     """
@@ -73,9 +77,42 @@ def tex_to_pdf(tex_path):
 
     return None
 
-if __name__ == '__main__':
-    for i in range(NUM_DOCUMENTS):
-        doc = create_document(NUM_SECTIONS)
-        base_path = os.path.join("outputs", "documents", str(i))
+
+def main(num_documents, num_sections, out_dir):
+    for i in range(num_documents):
+        doc = create_document(num_sections)
+        base_path = os.path.join(out_dir, str(i))
         tex_path = document_to_tex(doc, base_path)
         tex_to_pdf(tex_path)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description=f"Randomly generates PDF LaTeX documents for training the equation extractor."
+    )
+
+    parser.add_argument(
+        "num_documents",
+        type=int,
+        help="Number of documents to generate."
+    )
+
+    parser.add_argument(
+        "num_sections",
+        type=int,
+        help="Number of sections per document to generate."
+    )
+
+    parser.add_argument(
+        "out_dir",
+        type=str,
+        help="Directory to output the LaTeX documents"
+    )
+
+    args = parser.parse_args()
+
+    main(
+        num_documents=args.num_documents,
+        num_sections=args.num_sections,
+        out_dir=args.out_dir
+    )

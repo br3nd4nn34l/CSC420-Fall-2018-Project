@@ -1,15 +1,15 @@
 from pylatex import Document, NoEscape
 
-from page_generation.generic_producers import \
+from data_generation.generic_producers import \
     DictProducer, ListProducer, \
     InstanceProducer, \
     UniformProducer, NormalProducer
 
-from page_generation.constants import COLOR_MODEL, \
+from data_generation.constants import COLOR_MODEL, \
     BOX_COLOR_NAME, BOX_COLOR_RGB, \
     BOX_TEXT_COLOR_NAME, BOX_TEXT_COLOR_RGB
 
-from page_generation.latex_commands import BoxedEquationDefinition
+from data_generation.latex_commands import BoxedEquationDefinition
 
 # Picks document class
 DocumentClassProducer = ListProducer(["article", "report"]) \

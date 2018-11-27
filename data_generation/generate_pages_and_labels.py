@@ -1,13 +1,20 @@
 import os
-import glob
+import sys
+
+sys.path.append(os.path.dirname(sys.path[0]))  # So this can be run as a script
+
+import argparse
 
 import cv2 as cv
 import numpy as np
 from pdf2image import convert_from_path
 
-from page_generation.constants import \
+from data_generation.constants import \
     OLD_TEXT_COLOR_RGB, NEW_TEXT_COLOR_RGB, \
     OLD_PAGE_COLOR_RGB, NEW_PAGE_COLOR_RGB
+
+from helpers.data_provision import \
+    provide_document_names
 
 
 def one_hot_image(img, threshold):
@@ -69,7 +76,6 @@ def get_rectangle_coords(rect_img):
 
     (_, contours, _) = cv.findContours(np.copy(rect_img), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
 
-
     for cont in contours:
         (x, y, w, h) = cv.boundingRect(cont)
         x_min, y_min, x_max, y_max = x, y, x + w, y + h
@@ -99,14 +105,43 @@ def save_page_data(page_img, writing_path, label_path):
     cv.imwrite(writing_path, black_writing)
 
 
-if __name__ == '__main__':
-    pdf_paths = glob.glob("outputs/documents/*.pdf")
-
-    for pdf in pdf_paths:
-        pdf_name = os.path.basename(pdf)
-        filename = os.path.splitext(pdf_name)[0]
-
+def main(document_dir, eqn_label_dir, image_dir):
+    for filename in provide_document_names(document_dir):
+        pdf = os.path.join(document_dir, f"{filename}.pdf")
         for num, page in enumerate(pdf_to_numpy_pages(pdf)):
-            writing_path = f"outputs/pages/{filename}_{num}.png"
-            label_path = f"outputs/labels/{filename}_{num}.txt"
-            save_page_data(page, writing_path, label_path)
+            image_path = os.path.join(image_dir, f"{filename}_{num}.png")
+            label_path = os.path.join(eqn_label_dir, f"{filename}_{num}.txt")
+            save_page_data(page, image_path, label_path)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description=f"Converts LaTeX PDFs into the images (PNG) and "
+                    f"labels (TXT) needed to train the equation extractor."
+    )
+
+    parser.add_argument(
+        "document_dir",
+        type=str,
+        help="Directory that contains the LaTeX PDF files."
+    )
+
+    parser.add_argument(
+        "eqn_label_dir",
+        type=str,
+        help="Directory to output the TXT equation labels into."
+    )
+
+    parser.add_argument(
+        "image_dir",
+        type=str,
+        help="Directory to output the PNG page images into."
+    )
+
+    args = parser.parse_args()
+
+    main(
+        document_dir=args.document_dir,
+        eqn_label_dir=args.eqn_label_dir,
+        image_dir=args.image_dir
+    )

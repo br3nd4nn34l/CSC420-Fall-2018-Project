@@ -1,7 +1,7 @@
 from pylatex.base_classes import CommandBase
 from pylatex import UnsafeCommand, Package, NoEscape
 
-from page_generation.constants import BOX_COLOR_NAME, BOX_TEXT_COLOR_NAME
+from data_generation.constants import BOX_COLOR_NAME, BOX_TEXT_COLOR_NAME
 
 class BoxedEquationCommand(CommandBase):
     _latex_name = "boxedEquation"
