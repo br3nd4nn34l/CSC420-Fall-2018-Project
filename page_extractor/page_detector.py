@@ -179,9 +179,9 @@ def get_hough_lines(edges, img, k=20):
 
         intersection = ((x1, y1), (x2, y2))
 
-        a = list(bresenham(intersection[0][0], intersection[0][1],
+        hough_line_pixels = list(bresenham(intersection[0][0], intersection[0][1],
                            intersection[1][0], intersection[1][1]))
-        intersection_matches = len(set(a).intersection(canny_pts))
+        intersection_matches = len(set(hough_line_pixels).intersection(canny_pts))
         hough_lines.append((intersection, intersection_matches))
 
     hough_lines = sorted(hough_lines, key=lambda x: x[1], reverse=True)
@@ -245,17 +245,22 @@ def get_page_corners(img):
 
 if __name__ == '__main__':
     img = cv2.imread('images/paper.jpg')
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     edges = get_canny(img)
     lines = get_hough_lines(edges, img)
     intersections, lines, new_img = get_all_intersections(lines, img.shape, np.copy(img))
     quads = find_quadrilateral(intersections, edges)
     quads = np.array(quads).reshape(-1, 1, 2)
     # print(quads)
-    cv2.polylines(img, quads, True, (0, 0, 255), 15)
+    # cv2.polylines(img, quads, True, (0, 0, 255), 15)
     # cv2.imshow("original", img)
     # cv2.imshow("canny edges", edges)
     # cv2.imshow("original + edges + intersections", new_img)
     # cv2.waitKey(0)
     import page_transformation
-    page_transformation.homography(quads, img)
+
+    img = page_transformation.homography(quads, img)
+    cv2.imshow("original + edges + intersections", img)
+    # cv2.imwrite("final_result.jpg", img)
+    cv2.waitKey(0)
+
