@@ -46,7 +46,7 @@ def line_intersection(line1, line2, img_shape):
     # the lines are completely parallel. This algorithm assumes that
     # the lines are infinitely long.
     if div == 0:
-        # If the 2 lines have less than 5 pixel difference, then they are probably referencing
+        # If the 2 lines have less than 10 pixel difference, then they are probably referencing
         # the same edge. return 0 so that one of the two lines gets removed.
         if minimum_distance(line1, (Bx1, By1)) < 10:
             return 0
