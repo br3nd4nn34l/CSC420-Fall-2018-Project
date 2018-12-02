@@ -4,11 +4,11 @@ from page_transformation import homography
 import matplotlib.pyplot as plt
 
 
-def get_page():
+def get_page(img_path):
     """
     Get the page from an image.
     """
-    img = cv2.imread("images/paper.jpg")
+    img = cv2.imread(img_path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     corners = get_page_corners(img)
@@ -21,4 +21,4 @@ def get_page():
 
 
 if "__main__" == __name__:
-    get_page()
+    get_page(img_path="images/paper.jpg")

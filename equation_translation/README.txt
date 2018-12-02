@@ -1,0 +1,1 @@
+Run the prep.sh script within the data folder to generate the needed files
