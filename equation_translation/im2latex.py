@@ -1,3 +1,5 @@
+# Majority of the code in this file is from https://github.com/ssampang/im2latex
+
 import decoder
 import os
 import random

@@ -1,3 +1,4 @@
+# Majority of the code in this file is from https://github.com/ssampang/im2latex
 """
 This is a modified version of tensorflow.nn.seq2seq's attention_decoder and
 embedding_attention_decoder which allow dynamic sequence lengths and implement
