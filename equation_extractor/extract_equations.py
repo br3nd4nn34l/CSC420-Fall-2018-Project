@@ -100,7 +100,7 @@ if __name__ == '__main__':
 
     judge, unet = load_models("../models/char_judge.h5", "../models/unet.h5")
     page_dir = "../data/pages"
-    name = "28_7"
+    name = "1064_2"
     page = provide_page(page_dir, name)
 
     for (i, equation) in enumerate(extract_equations(page, judge, unet)):
